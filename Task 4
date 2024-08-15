@@ -1,0 +1,60 @@
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class QuizApplication {
+  private String[] questions = {
+    "What is the capital of France?",
+    "Who is the CEO of Tesla?",
+    "What is the largest planet in our solar system?"
+  };
+
+  private String[] answers = {
+    "Paris",
+    "Elon Musk",
+    "Jupiter"
+  };
+
+  private int score = 0;
+  private int currentQuestion = 0;
+
+  public void startQuiz() {
+    System.out.println("Welcome to the quiz! You have 30 seconds to answer each question.");
+    System.out.println("Good luck!");
+
+    Timer timer = new Timer();
+    timer.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        askQuestion();
+      }
+    }, 0, 30000); // 30 seconds
+  }
+
+  private void askQuestion() {
+    if (currentQuestion >= questions.length) {
+      System.out.println("Quiz over! Your score is " + score + "/" + questions.length);
+      return;
+    }
+
+    System.out.println("Question " + (currentQuestion + 1) + ": " + questions[currentQuestion]);
+    System.out.print("Enter your answer: ");
+
+    Scanner input = new Scanner(System.in);
+    String userAnswer = input.nextLine();
+
+    if (userAnswer.equalsIgnoreCase(answers[currentQuestion])) {
+      System.out.println("Correct!");
+      score++;
+    } else {
+      System.out.println("Incorrect. The correct answer is " + answers[currentQuestion]);
+    }
+
+    currentQuestion++;
+  }
+
+  public static void main(String[] args) {
+    QuizApplication quiz = new QuizApplication();
+    quiz.startQuiz();
+  }
+}
