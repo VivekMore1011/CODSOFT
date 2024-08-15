@@ -1,0 +1,110 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Course {
+  private String courseName;
+  private String courseCode;
+  private int credits;
+
+  public Course(String courseName, String courseCode, int credits) {
+    this.courseName = courseName;
+    this.courseCode = courseCode;
+    this.credits = credits;
+  }
+
+  public String getCourseName() {
+    return courseName;
+  }
+
+  public String getCourseCode() {
+    return courseCode;
+  }
+
+  public int getCredits() {
+    return credits;
+  }
+}
+
+class Student {
+  private String studentName;
+  private String studentId;
+  private ArrayList<Course> registeredCourses;
+
+  public Student(String studentName, String studentId) {
+    this.studentName = studentName;
+    this.studentId = studentId;
+    this.registeredCourses = new ArrayList<>();
+  }
+
+  public void registerCourse(Course course) {
+    registeredCourses.add(course);
+  }
+
+  public void displayRegisteredCourses() {
+    System.out.println("Registered Courses:");
+    for (Course course : registeredCourses) {
+      System.out.println(course.getCourseName() + " (" + course.getCourseCode() + ") - " + course.getCredits() + " credits");
+    }
+  }
+}
+
+public class StudentCourseRegistrationSystem {
+  private ArrayList<Course> courses;
+  private ArrayList<Student> students;
+
+  public StudentCourseRegistrationSystem() {
+    this.courses = new ArrayList<>();
+    this.students = new ArrayList<>();
+  }
+
+  public void addCourse(Course course) {
+    courses.add(course);
+  }
+
+  public void addStudent(Student student) {
+    students.add(student);
+  }
+
+  public void registerStudentForCourse(Student student, Course course) {
+    student.registerCourse(course);
+  }
+
+  public void displayCourses() {
+    System.out.println("Available Courses:");
+    for (Course course : courses) {
+      System.out.println(course.getCourseName() + " (" + course.getCourseCode() + ") - " + course.getCredits() + " credits");
+    }
+  }
+
+  public void displayStudents() {
+    System.out.println("Registered Students:");
+    for (Student student : students) {
+      System.out.println(student.studentName + " (" + student.studentId + ")");
+    }
+  }
+
+  public static void main(String[] args) {
+    StudentCourseRegistrationSystem system = new StudentCourseRegistrationSystem();
+
+    system.addCourse(new Course("Mathematics", "MATH101", 3));
+    system.addCourse(new Course("Science", "SCI102", 4));
+    system.addCourse(new Course("English", "ENG103", 3));
+
+    system.addStudent(new Student("John Doe", "S12345"));
+    system.addStudent(new Student("Jane Doe", "S67890"));
+
+    system.displayCourses();
+    system.displayStudents();
+
+    Student student1 = system.students.get(0);
+    Course course1 = system.courses.get(0);
+    system.registerStudentForCourse(student1, course1);
+
+    Student student2 = system.students.get(1);
+    Course course2 = system.courses.get(1);
+    system.registerStudentForCourse(student2, course2);
+
+    student1.displayRegisteredCourses();
+    student2.displayRegisteredCourses();
+  }
+}
